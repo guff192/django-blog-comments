@@ -9,8 +9,8 @@ class Comment(models.Model):
     article_id = models.ForeignKey('Article', on_delete=models.CASCADE, to_field='id')
 
     level = models.IntegerField(verbose_name='comment level')
-    parent_path = models.CharField(max_length=255)
+    parent_path = models.CharField(max_length=255, db_index=True)
 
     text = models.TextField(verbose_name='comment text', max_length=1000)
-    time_posted = models.DateTimeField(verbose_name='comment posting time', auto_created=True)
+    time_posted = models.DateTimeField(verbose_name='comment posting time', auto_created=True, db_index=True)
 
