@@ -47,7 +47,7 @@ def get_article_comments_or_add_new(request, pk):
         return Response({'message': 'comment data is invalid'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(http_method_names=['GET'])
+@api_view(http_method_names=['GET', 'POST'])
 def get_comment_replies_or_add_new(request, pk):
     try:
         parent_comment = Comment.objects.get(pk=pk)
