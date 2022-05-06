@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - /var/lib/postgresql/data/
+      - ./create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+
+  api:
+    build: .
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      POSTGRES_PASSWORD: qwerty
+
