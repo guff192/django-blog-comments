@@ -12,5 +12,5 @@ class Comment(models.Model):
     parent_path = models.CharField(max_length=255, db_index=True)
 
     text = models.TextField(verbose_name='comment text', max_length=1000)
-    time_posted = models.DateTimeField(verbose_name='comment posting time', auto_created=True, db_index=True)
+    time_posted = models.DateTimeField(verbose_name='comment posting time', auto_now_add=True, db_index=True)
 
