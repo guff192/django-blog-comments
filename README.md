@@ -30,7 +30,10 @@ make build && make run
 ```
 make createdb && make migrate
 ```
-
+Все последующие запуски можно выполнять одной командой:
+```
+make run
+```
 Для остановки:
 ```
 make stop
