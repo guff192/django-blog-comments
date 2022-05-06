@@ -6,7 +6,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
 from api import serializers
-from blog.models import Comment
+from blog.models import Comment, Article
 
 
 @api_view(http_method_names=['POST'])
@@ -53,8 +53,29 @@ def add_comment_reply(request, pk):
 
 @api_view(http_method_names=['GET'])
 def get_article_comments(request, pk):
-    comments = Comment.objects.filter(article__pk=pk).filter(level__lte=3).order_by('parent_path', 'time_posted')
+    try:
+        Article.objects.get(pk=pk)
+    except Article.DoesNotExist:
+        return Response({'message': 'article doesn\'t exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    comments = Comment.objects.filter(article__pk=pk).filter(level__lte=3)\
+            .order_by('parent_path', 'time_posted')
     serializer = serializers.CommentSerializer(comments, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(http_method_names=['GET'])
+def get_comment_replies(request, pk):
+    try:
+        parent_comment = Comment.objects.get(pk=pk)
+    except Comment.DoesNotExist:
+        return Response({'message': 'article doesn\'t exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    replies_parent_path = f'{parent_comment.parent_path}{parent_comment.pk}/'
+    replies = Comment.objects.filter(parent_path__contains=replies_parent_path)\
+            .order_by('parent_path', 'time_posted')
+    serializer = serializers.CommentSerializer(replies, many=True)
 
     return Response(serializer.data)
 

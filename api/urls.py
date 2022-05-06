@@ -8,5 +8,6 @@ urlpatterns = [
     path('v1/articles/<int:pk>/add_comment', views.add_comment_to_article),
     path('v1/comments/<int:pk>/reply', views.add_comment_reply),
     path('v1/articles/<int:pk>/comments', views.get_article_comments),
+    path('v1/comments/<int:pk>/replies', views.get_comment_replies),
 ]
 
