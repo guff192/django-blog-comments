@@ -6,7 +6,7 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    article_id = models.ForeignKey('Article', on_delete=models.CASCADE, to_field='id')
+    article = models.ForeignKey('Article', on_delete=models.CASCADE, to_field='id')
 
     level = models.IntegerField(verbose_name='comment level')
     parent_path = models.CharField(max_length=255, db_index=True)
