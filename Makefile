@@ -7,4 +7,4 @@ migrate:
 createdb:
 	docker-compose exec db createdb -U postgres blog
 stop:
-	docker-compose down
+	docker-compose stop
