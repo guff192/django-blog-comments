@@ -70,7 +70,7 @@ def get_comment_replies(request, pk):
     try:
         parent_comment = Comment.objects.get(pk=pk)
     except Comment.DoesNotExist:
-        return Response({'message': 'article doesn\'t exist'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'message': 'comment doesn\'t exist'}, status=status.HTTP_404_NOT_FOUND)
 
     replies_parent_path = f'{parent_comment.parent_path}{parent_comment.pk}/'
     replies = Comment.objects.filter(parent_path__contains=replies_parent_path)\
