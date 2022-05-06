@@ -17,6 +17,7 @@ class CommentCreationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         comment = super().create(validated_data)
         comment.parent_path = '/'
+        comment.save()
 
         return comment
 
